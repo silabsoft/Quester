@@ -11,6 +11,7 @@ package org.silabsoft.dreambot;
  */
 import java.util.List;
 import org.dreambot.api.methods.Calculations;
+import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.script.Category;
@@ -77,13 +78,17 @@ public class Quester extends AbstractScript {
             setting.getCurrentStepLabel().setText("");
         }
         if (questsToSolve == null) {
-             return Calculations.random(1000, 1500);
+            return Calculations.random(1000, 1500);
         }
         if (questsToSolve.isEmpty() && setting != null && !setting.getStartButton().isEnabled()) {
             setting.getStartButton().setEnabled(true);
             setting.getStopButton().setEnabled(false);
         }
         if (!questsToSolve.isEmpty()) {
+            if (!this.getTabs().isOpen(Tab.QUEST)) {
+                this.getTabs().open(Tab.QUEST);
+                return 1000;
+            }
             QuestSolver q = questsToSolve.remove(0);
 
             if (this.getQuests().isFinished(q.getQuest())) {
@@ -119,5 +124,5 @@ public class Quester extends AbstractScript {
     public void setQuestsToSolve(List<QuestSolver> questsToSolve) {
         this.questsToSolve = questsToSolve;
     }
-    
+
 }
