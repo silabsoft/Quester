@@ -1,7 +1,6 @@
 package org.silabsoft.dreambot.quest.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.methods.container.impl.bank.Bank;
@@ -17,8 +16,6 @@ import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.GroundItem;
-import org.dreambot.api.wrappers.items.Item;
-import org.dreambot.api.wrappers.widgets.WidgetChild;
 import org.silabsoft.dreambot.quest.QuestSolver;
 import static org.silabsoft.dreambot.quest.QuestSolver.State.END;
 import static org.silabsoft.dreambot.quest.impl.CookAssistant.QuestStep.*;
