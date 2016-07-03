@@ -486,7 +486,12 @@ public class CookAssistant extends QuestSolver {
             if (w.getChild(9).getText().contains("<str>")) {
                 hasAlreadyRetrievedEgg = true;
             }
-            this.currentStep = CHECK_ITEMS;
+            if (w.getChild(13).getText().contains("QUEST COMPLETE") && !w.getChild(13).isHidden()) {
+                this.setQuestSolverState(END);
+                
+            } else {
+                this.currentStep = CHECK_ITEMS;
+            }
             this.setQuestSolverState(QUESTING);
             w.close();
 
