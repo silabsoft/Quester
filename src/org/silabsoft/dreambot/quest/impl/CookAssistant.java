@@ -20,6 +20,7 @@ import org.silabsoft.dreambot.quest.QuestSolver;
 import static org.silabsoft.dreambot.quest.QuestSolver.State.END;
 import static org.silabsoft.dreambot.quest.impl.CookAssistant.QuestStep.*;
 import static org.silabsoft.dreambot.quest.QuestSolver.State.QUESTING;
+import static org.silabsoft.dreambot.util.Constants.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -50,7 +51,7 @@ public class CookAssistant extends QuestSolver {
     public static final Area LUMBRIDGE_EAST_COW_PEN = new Area(3252, 3283, 3258, 3275, 0);
     public static final Area LUMBRIDGE_WHEAT_FIELD = new Area(3154, 3303, 3162, 3296, 0);
     public static final Area LUMBRIDGE_MILL_CONTROL_AREA = new Area(3165, 3308, 3168, 3305, 2);
-    public static final Area LUMBRIDGE_CASTLE_ENTRANCE_AREA = new Area(3213, 3217, 3216, 3213, 0);
+
     boolean hasCheckedBank = false;
     private int bankStep;
     private boolean hasEmptiedInventory;
@@ -464,19 +465,9 @@ public class CookAssistant extends QuestSolver {
     public void setStep(AbstractScript script) {
         //This part really isn't nessesary for this particular quest as it only requires one step however I wrote it just to get myself familiar with the api. I it will be used when you have you start a quest thats partially completed.
 
-        Widgets widgets = script.getWidgets();
-
-        if (widgets.getWidget(COOKS_ASSISTANT_QUEST_PARENT_WIDGET) == null || !widgets.getWidget(COOKS_ASSISTANT_QUEST_PARENT_WIDGET).isVisible()) {
-            if (!script.getTabs().isOpen(Tab.QUEST)) {
-                script.getTabs().open(Tab.QUEST);
-                return;
-            }
-            quest.getWidgetChild(script.getClient()).interact();
-            return;
-        }
-        Widget w = widgets.getWidget(COOKS_ASSISTANT_QUEST_PARENT_WIDGET);
+        Widget w = this.openQuestWidget(script, COOKS_ASSISTANT_QUEST_PARENT_WIDGET);
         if (w != null && w.isVisible()) {
-            script.log(w.getChild(7).getText());
+
             if (w.getChild(7).getText().contains("<str>")) {
                 hasAlreadyRetrievedMilk = true;
             }
@@ -488,7 +479,7 @@ public class CookAssistant extends QuestSolver {
             }
             if (w.getChild(13).getText().contains("QUEST COMPLETE") && !w.getChild(13).isHidden()) {
                 this.setQuestSolverState(END);
-                
+
             } else {
                 this.currentStep = CHECK_ITEMS;
             }
@@ -496,6 +487,11 @@ public class CookAssistant extends QuestSolver {
             w.close();
 
         }
+    }
+
+    @Override
+    public int[] getQuestListScrollBounds() {
+        return new int[]{ 247, 249};
     }
 
     @Override
