@@ -29,7 +29,7 @@ import static org.silabsoft.dreambot.util.Navigation.LumbridgeCastleSpinningWhee
 public class SheepShearer extends QuestSolver {
 
     private QuestStep currentStep;
-    private static final String[] TALK_OPTIONS = new String[]{"looking for a quest", "Yes okay.", "Of course!", "expert","I'm back!"};
+    private static final String[] TALK_OPTIONS = new String[]{"looking for a quest", "Yes okay.", "Of course!", "expert", "I'm back!"};
     private int ballsOfWoolRequired = 20;
     private boolean spinning;
     private int spinErrorCheck;
@@ -165,15 +165,19 @@ public class SheepShearer extends QuestSolver {
                     script.getTabs().open(Tab.QUEST);
                     return;
                 }
+                if (script.getQuests().isFinished(quest)) {
+                    this.setQuestSolverState(State.END);
+                    return;
+                }
+                if (script.getQuests().isStarted(quest) && script.getInventory().count(BALL_OF_WOOL) < this.ballsOfWoolRequired) {
+                    currentStep = FREDS_HOUSE;
+                    return;
+                }
+
                 if (talkWithFred(script)) {
-                    if (script.getQuests().isFinished(quest)) {
-                        this.setQuestSolverState(State.END);
-                        return;
-                    }
-                    if (!script.getTabs().isOpen(Tab.INVENTORY)) {
-                        script.getTabs().open(Tab.INVENTORY);
-                        currentStep = FREDS_HOUSE;
-                    }
+
+                    currentStep = FREDS_HOUSE;
+
                 }
                 return;
             case TAKE_SHEARS:
@@ -297,7 +301,7 @@ public class SheepShearer extends QuestSolver {
     @Override
     public void setStep(AbstractScript script
     ) {
- 
+
         Widget w = this.openQuestWidget(script, 275);
         if (w != null && w.isVisible()) {
             String woolNeeded = w.getChild(7).getText();
@@ -326,7 +330,7 @@ public class SheepShearer extends QuestSolver {
 
     @Override
     public String toString() {
-        return "SheepShearer";
+        return "Sheep Shearer";
     }
 
     private boolean talkWithFred(AbstractScript script) {
