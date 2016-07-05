@@ -20,7 +20,7 @@ import org.silabsoft.dreambot.quest.QuestSolver;
 import static org.silabsoft.dreambot.quest.QuestSolver.State.END;
 import org.silabsoft.dreambot.quest.impl.SheepShearer;
 
-@ScriptManifest(author = "Silabsoft", name = "Quester", version = 1.0, description = "Runescape quests made easy", category = Category.QUEST)
+@ScriptManifest(author = "Silabsoft", name = "Quester", version = 1.1, description = "Runescape quests made easy", category = Category.QUEST)
 public class Quester extends AbstractScript {
     
     private QuestSolver currentQuest = null;
