@@ -97,7 +97,7 @@ public abstract class QuestSolver extends CommonBotMethods {
     public int questSolverLoop(AbstractScript script) {
         switch (currentState) {
             case START:
-
+            case STAGING:
                 if (!script.getTabs().isOpen(Tab.QUEST)) {
                     script.getTabs().open(Tab.QUEST);
                     break;
